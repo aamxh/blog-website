@@ -2,15 +2,15 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/post');
 
-router.get('', async (req, res) => {
+router.get('/', async (req, res) => {
     const locals = {
         title: "NodeJs Blog",
         description: "Simple blog created with NodeJs, Express & MongoDb."
     };
-    let perPage = 10;
+    let perPage = 6;
     let page = req.query.page || 1;
-    const count = Post.length;
-    const nextPage = parseInt(page) + 1;
+    const count = await Post.countDocuments({});
+    let nextPage = parseInt(page) + 1;
     const hasNextPage = nextPage <= Math.ceil(count / perPage);
     try {
         const data = await Post.aggregate([{$sort: {creationDate: -1}}])
@@ -21,7 +21,7 @@ router.get('', async (req, res) => {
             locals,
             data,
             current: page,
-            nextPage: hasNextPage ? nextPage: null,
+            nextPage: hasNextPage ? nextPage : null,
             currentRoute: "/"
         });
     } catch (ex) {
@@ -80,5 +80,19 @@ router.get('/about', (req, res) => {
 }
 
 insertPostData(); */
+
+router.get('/post/:id', async (req, res) => {
+    const locals = {
+        title: "NodeJs Blog",
+        description: "Simple Blog created with NodeJs, Express & MongoDB."
+    }
+    try {
+        const id = req.params.id;
+        const data = await Post.findById(id);
+        res.render('post', {locals, data});
+    } catch (ex) {
+        res.status(500).json({message: ex.message});
+    }
+});
 
 module.exports = router;
