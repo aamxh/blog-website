@@ -1,0 +1,26 @@
+<div class="author">
+    <h1 class="author-heading">Hi, I am Raddy.</h1>
+    <p class="author-body">-Web developer and content creator-</p>
+</div>
+
+<img src="/img/hero-image.webp" alt="Hero Image" class="hero-image">
+
+<section class="articles">
+    <h2 class="articles-heading">Latest Posts</h2>
+    <ul class="article-ul">
+        <% data.forEach(post => { %>
+            <li>
+                <a href="<%- post._id %>">
+                    <span><%= post.title %></span>
+                    <span class="article-date"><%= post.creationDate.toDateString() %></span>
+                </a>
+            </li>
+        <% }) %>
+        
+    </ul>
+
+    <% if (nextPage !== null) { %>
+        <a href="/?page=<%= nextPage %>" class="pagination">&lt; View Older Posts</a>
+    <% } %>
+
+</section>
