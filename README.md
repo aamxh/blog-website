@@ -5,8 +5,8 @@
 * HTML5
 * CSS3
 * Javascript
-* NodeJs packages: mongoose, express, ejs..
+* NodeJs packages: mongoose, express, ejs, express-ejs-layouts, express-session, jsonwebtoken, method-override, cooki-parser, connect-mongo.
 * MongoDB
 
-## Getting started
-* 
+## Cloning
+Run: git clone https://github.com/aamxh/blog-website
