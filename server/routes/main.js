@@ -82,14 +82,38 @@ router.get('/about', (req, res) => {
 insertPostData(); */
 
 router.get('/post/:id', async (req, res) => {
-    const locals = {
-        title: "NodeJs Blog",
-        description: "Simple Blog created with NodeJs, Express & MongoDB."
-    }
     try {
         const id = req.params.id;
         const data = await Post.findById(id);
+        const locals = {
+            title: data.title,
+            description: "Simple Blog created with NodeJs, Express & MongoDB."
+        }
         res.render('post', {locals, data});
+    } catch (ex) {
+        res.status(500).json({message: ex.message});
+    }
+});
+
+router.post('/search', async (req, res) => {
+    const locals = {
+        title: 'Search',
+        description: "Simple Blog created with NodeJs, Express & MongoDB."
+    }
+    try {
+        let searchTerm = req.body['search-term'];
+        const searchNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
+        const data = await Post.find({
+            $or: [
+                {title: {
+                    $regex: new RegExp(searchNoSpecialChar, 'i'),
+                }},
+                {title: {
+                    $regex: new RegExp(searchNoSpecialChar, 'i'),
+                }},
+            ],
+        });
+        res.render('search', {data, locals});
     } catch (ex) {
         res.status(500).json({message: ex.message});
     }

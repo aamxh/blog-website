@@ -9,10 +9,13 @@ const port = process.env.port;
 app.set('layout', './layouts/main');
 app.set('view engine', 'ejs');
 
+connectDB();
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 app.use(layout);
 app.use(express.static('public'));
 app.use('/', require('./server/routes/main'));
-connectDB();
+app.use('/', require('./server/routes/admin'));
 
 app.listen(port, () => {
     console.log(`Serving on port ${port}`);
