@@ -5,7 +5,7 @@
 * HTML5
 * CSS3
 * Javascript
-* NodeJs packages: mongoose, express, ejs, express-ejs-layouts, express-session, jsonwebtoken, method-override, cooki-parser, connect-mongo.
+* NodeJs packages: mongoose, express, ejs, express-ejs-layouts.
 * MongoDB
 
 ## Cloning
